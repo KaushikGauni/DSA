@@ -1,0 +1,23 @@
+// Isomorphic Strings
+// https://leetcode.com/problems/isomorphic-strings/
+// Accepted 2026-06-16 | Runtime 0 ms | Memory 9.3 MB
+
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        if(s.size()!=t.size()){
+            return false;
+        }
+        vector<int> m1(256,-1),m2(256,-1);
+        for(int i=0;i<s.size();i++){
+            if(m1[s[i]]!=m2[t[i]]){
+                return false;
+            }
+
+            m1[s[i]] = i;
+            m2[t[i]] = i;
+        }
+
+        return true;
+    }
+};

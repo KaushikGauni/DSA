@@ -1,0 +1,15 @@
+// Power of Two
+// https://leetcode.com/problems/power-of-two/
+// Accepted 2025-07-30 | Runtime 0 ms | Memory 40.9 MB
+
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if(n<=0){
+            return false;
+        }
+        if((n&n-1)==0){
+            return true;
+        }
+        return false;
+    }
+}

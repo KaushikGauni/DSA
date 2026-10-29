@@ -1,0 +1,44 @@
+// Best Time to Buy and Sell Stock III
+// https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
+// Accepted 2026-07-25 | Runtime 398 ms | Memory 211.4 MB
+
+class Solution {
+public:
+
+    int recur(vector<int>& prices, int i, int buy, int count ,vector<vector<vector<int>>> &dp){
+        if(i>=prices.size() || count == 2){
+            return 0;
+        }
+        if(dp[i][buy][count]!=-1){
+            return dp[i][buy][count];
+        }
+        if(buy){
+            int take = -prices[i] + recur(prices,i+1,0,count,dp);
+            int nottake = recur(prices,i+1,1,count,dp);
+            return dp[i][buy][count] = max(take, nottake);
+        }
+        else{
+            int sell = prices[i] + recur(prices,i+1,1,count+1,dp);
+            int notsell = recur(prices,i+1,0,count,dp);
+            return dp[i][buy][count] = max(sell, notsell);
+        }
+    }
+
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+        for(int i=n-1;i>=0;i--){
+            for(int j=0;j<2;j++){
+                for(int k=0;k<2;k++){
+                    if(j==1){
+                        dp[i][j][k] = max(-prices[i]+dp[i+1][0][k], dp[i+1][1][k]);
+                    }
+                    else{
+                        dp[i][j][k] = max(prices[i]+dp[i+1][1][k+1], dp[i+1][0][k]);
+                    }
+                }
+            }
+        }
+        return dp[0][1][0];
+    }
+};
